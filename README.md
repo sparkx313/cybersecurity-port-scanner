@@ -1,37 +1,16 @@
-# ⚡ Multi-Threaded TCP/UDP Port Scanner & Banner Grabber
+# TCP Port Scanner
 
-[![Security Audit](https://img.shields.io/badge/Security-Educational%20Tool-emerald?style=for-the-badge)](https://github.com/sparkx313/cybersecurity-port-scanner)
-[![License: MIT](https://img.shields.io/badge/License-MIT-gold?style=for-the-badge)](LICENSE)
-[![Python 3.11](https://img.shields.io/badge/Python-3.11%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+A bounded, concurrent TCP connect scanner for one explicitly selected host. It reports open ports, connection refusals, other connection errors, service names when available, and per-port latency. It supports IPv4 and IPv6 and writes an optional JSON report.
 
-## 📌 Description
-High-speed multi-threaded network port scanner built in Python for network reconnaissance, banner grabbing, and port state identification.
+## Run
 
----
+Requires Python 3.10 or newer; no third-party packages are needed.
 
-## 🚀 Key Features
-- **Pure Python Implementation**: Lightweight, modular codebase with standard library efficiency.
-- **Security-First Architecture**: Built for educational ethical security assessments, red team exercises, and blue team defense auditing.
-- **Clear CLI Outputs**: Structured logging, status scores, and security alert formatting.
+~~~sh
+python scanner.py --target 127.0.0.1 --start-port 1 --end-port 1024
+python scanner.py --target 192.0.2.10 --start-port 1 --end-port 65535 --json-output scan.json
+~~~
 
----
+The default target is loopback. The scanner only performs TCP connection attempts; it does not scan UDP, exploit services, or send HTTP probes for banners. A refused connection is reported closed. Timeouts and other connection errors are grouped as filtered, which is not proof of a firewall. The port-to-service label is a hint based on the local service table, not service identification.
 
-## 📦 Usage Instructions
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/sparkx313/cybersecurity-port-scanner.git
-   cd cybersecurity-port-scanner
-   ```
-
-2. **Run the security tool**:
-   ```bash
-   python scanner.py
-   ```
-
----
-
-## ⚠️ Educational Disclaimer
-This repository is created strictly for educational purposes, security auditing, and defensive research. Do not execute against target systems without explicit authorization.
-
-Developed with ❤️ by **sparkx313**.
+Use it only on systems and networks you own or are explicitly authorized to assess. The default range is ports 1 through 1024. Worker count is capped at 256, and timeout at 10 seconds.
